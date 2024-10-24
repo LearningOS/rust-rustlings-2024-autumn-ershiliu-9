@@ -5,6 +5,27 @@
 // Execute `rustlings hint structs1` or use the `hint` watch subcommand for a
 // hint.
 
+
+// Define the classic struct
+struct ColorClassicStruct {
+    red: u8,
+    green: u8,
+    blue: u8,
+}
+
+// Define the tuple struct
+struct ColorTupleStruct(u8, u8, u8);
+
+// Define the unit-like struct
+struct UnitLikeStruct;
+
+// Implement the Debug trait for UnitLikeStruct so it can be printed
+impl std::fmt::Debug for UnitLikeStruct {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "UnitLikeStruct")
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
