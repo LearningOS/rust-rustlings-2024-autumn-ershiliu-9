@@ -1,21 +1,17 @@
-// options3.rs
-//
-// Execute `rustlings hint options3` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
-
 struct Point {
     x: i32,
     y: i32,
 }
 
 fn main() {
-    let y: Option<Point> = Some(Point { x: 100, y: 200 });
+    let mut y: Option<Point> = Some(Point { x: 100, y: 200 });
 
+    // 使用 `ref` 关键字来借用 `y` 而不是移动它
     match y {
-        Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
-        _ => panic!("no match!"),
+        Some(ref p) => println!("Co-ordinates are {},{} ", p.x, p.y),
+        None => panic!("no match!"),
     }
-    y; // Fix without deleting this line.
+
+    // 现在 `y` 仍然可用，因为它没有被移动
+    y; 
 }
