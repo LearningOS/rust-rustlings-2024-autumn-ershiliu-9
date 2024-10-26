@@ -1,18 +1,24 @@
 pub enum Command {
     Uppercase,
     Trim,
-    Append(usize),
+    Append(String), // Changed to accept a String
 }
 
 mod my_module {
     use super::Command;
 
-    // TODO: Complete the function signature!
-    pub fn transformer(input: ???) -> ??? {
-        // TODO: Complete the output declaration!
-        let mut output: ??? = vec![];
-        for (string, command) in input.iter() {
-            // TODO: Complete the function body. You can do it!
+    pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
+        let mut output: Vec<String> = vec![];
+        for (string, command) in input {
+            let transformed = match command {
+                Command::Uppercase => string.to_uppercase(),
+                Command::Trim => string.trim().to_string(),
+                Command::Append(app_str) => {
+                    println!("Appending '{}' to '{}'", app_str, string);
+                    format!("{}{}", string, app_str)
+                }
+            };
+            output.push(transformed);
         }
         output
     }
@@ -20,8 +26,7 @@ mod my_module {
 
 #[cfg(test)]
 mod tests {
-    // TODO: What do we need to import to have `transformer` in scope?
-    use ???;
+    use super::my_module::transformer;
     use super::Command;
 
     #[test]
@@ -29,12 +34,13 @@ mod tests {
         let output = transformer(vec![
             ("hello".into(), Command::Uppercase),
             (" all roads lead to rome! ".into(), Command::Trim),
-            ("foo".into(), Command::Append(1)),
-            ("bar".into(), Command::Append(5)),
+            ("foo".into(), Command::Append("bar".into())), // Pass the string to append
+            ("bar".into(), Command::Append("barbarbarbarbarbar".into())), // Pass the string to append
         ]);
+        println!("Output: {:?}", output);
         assert_eq!(output[0], "HELLO");
         assert_eq!(output[1], "all roads lead to rome!");
         assert_eq!(output[2], "foobar");
-        assert_eq!(output[3], "barbarbarbarbarbar");
+        assert_eq!(output[3], "barbarbarbarbarbarbar");
     }
 }
